@@ -3,6 +3,7 @@ import { useAppDispatch } from "../../redux/store";
 import { deleteTask, openModal, setCurrentTask } from "../../redux/tasks/slice";
 import { getFirestore, doc, deleteDoc } from "firebase/firestore";
 import { selectID } from "../../redux/auth/selectors";
+import { selectTaskListId } from "../../redux/tasks/selectors";
 
 type Props = {
   task: {
@@ -12,6 +13,7 @@ type Props = {
 };
 
 const TaskItem = ({ task }: Props) => {
+  const taskId = useSelector(selectTaskListId);
   const userId = useSelector(selectID);
   const dispatch = useAppDispatch();
   const db = getFirestore();
@@ -20,7 +22,7 @@ const TaskItem = ({ task }: Props) => {
     console.log("User ID:", userId);
     console.log("Deleting task ID:", task.id);
     try {
-      await deleteDoc(doc(db, "users", userId, "tasks", task.id));
+      await deleteDoc(doc(db, "lists", taskId, "listItems", task.id));
 
       dispatch(deleteTask(task.id));
     } catch (error) {

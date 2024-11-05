@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../redux/store";
 import { removeUser } from "../../redux/auth/slice";
 import toast from "react-hot-toast";
-import { deleteAllTasks } from "../../redux/tasks/slice";
+import { deleteAllTasks, deleteTaskListId } from "../../redux/tasks/slice";
 
 type IsActive = {
   isActive: boolean;
@@ -48,6 +48,7 @@ const Navigation = () => {
           onClick={() => {
             dispatch(removeUser());
             dispatch(deleteAllTasks());
+            dispatch(deleteTaskListId());
             toast.success("Successfully Logged Out!");
           }}
         >

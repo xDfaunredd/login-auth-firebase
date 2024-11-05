@@ -7,6 +7,7 @@ const AppBar = () => {
     <>
       <Header />
       <ModalForm />
+
       <Outlet />
     </>
   );

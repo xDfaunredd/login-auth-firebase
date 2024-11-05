@@ -4,6 +4,8 @@ import { addTask } from "../../redux/tasks/slice";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { selectTaskListId } from "../../redux/tasks/selectors";
 
 type InitialValues = {
   taskName: string;
@@ -19,6 +21,7 @@ const FromAdd = () => {
   const dispatch = useAppDispatch();
   const auth = getAuth();
   const db = getFirestore();
+  const taskId = useSelector(selectTaskListId);
 
   async function handleSubmit(
     values: InitialValues,
@@ -29,7 +32,7 @@ const FromAdd = () => {
     if (user) {
       try {
         const docFer = await addDoc(
-          collection(db, "users", user.uid, "tasks"),
+          collection(db, "lists", taskId, "listItems"),
           {
             taskName: values.taskName,
           }

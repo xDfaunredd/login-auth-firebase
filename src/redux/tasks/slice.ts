@@ -10,12 +10,16 @@ type InitialState = {
   items: Array<Task>;
   isOpen: boolean;
   currentTask: Task;
+  tasksTitleData: string[];
+  taskListId: string;
 };
 
 const initialState: InitialState = {
   items: [],
   isOpen: false,
   currentTask: { id: "", taskText: "" },
+  taskListId: "",
+  tasksTitleData: [],
 };
 
 const tasksSlice = createSlice({
@@ -51,6 +55,15 @@ const tasksSlice = createSlice({
     setCurrentTask: (state, action) => {
       state.currentTask = action.payload;
     },
+    setTaskListId: (state, action) => {
+      state.taskListId = action.payload;
+    },
+    deleteTaskListId: (state) => {
+      state.taskListId = "";
+    },
+    addNewItemToData: (state, action) => {
+      state.tasksTitleData.push(action.payload);
+    },
   },
 });
 
@@ -64,4 +77,7 @@ export const {
   openModal,
   closeModal,
   setCurrentTask,
+  setTaskListId,
+  deleteTaskListId,
+  addNewItemToData,
 } = tasksSlice.actions;

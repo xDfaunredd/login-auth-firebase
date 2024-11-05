@@ -1,25 +1,26 @@
-// TaskList.js
 import { useEffect } from "react";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { useSelector } from "react-redux";
-import { selectID } from "../../redux/auth/selectors";
+
 import { useAppDispatch } from "../../redux/store";
 import { setTasks } from "../../redux/tasks/slice";
-import { selectTasks } from "../../redux/tasks/selectors";
+import { selectTaskListId, selectTasks } from "../../redux/tasks/selectors";
 import TaskItem from "../TaskItem/TaskItem";
 
 const TaskList = () => {
   const dispatch = useAppDispatch();
   const tasks = useSelector(selectTasks);
-  const userId = useSelector(selectID);
+  const taskId = useSelector(selectTaskListId);
 
   useEffect(() => {
     const fetchTasks = async () => {
-      if (userId) {
+      console.log("tasklisstID", taskId);
+
+      if (taskId) {
         /////  /////  /////  /////  /////  /////
 
         const db = getFirestore();
-        const tasksCollection = collection(db, "users", userId, "tasks");
+        const tasksCollection = collection(db, "lists", taskId, "listItems");
         const tasksSnapshot = await getDocs(tasksCollection);
 
         const tasksList = tasksSnapshot.docs.map((doc) => {
@@ -40,7 +41,7 @@ const TaskList = () => {
     };
 
     fetchTasks();
-  }, [dispatch, userId]);
+  }, [dispatch, taskId]);
 
   return (
     <div>

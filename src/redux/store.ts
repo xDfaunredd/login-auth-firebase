@@ -20,11 +20,16 @@ const persistConfig = {
   version: 1,
   storage,
 };
+const persistConfigTasks = {
+  key: "tasks",
+  version: 1,
+  storage,
+};
 
 export const store = configureStore({
   reducer: {
     auth: persistReducer(persistConfig, authReducer),
-    tasks: tasksReducer,
+    tasks: persistReducer(persistConfigTasks, tasksReducer),
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
