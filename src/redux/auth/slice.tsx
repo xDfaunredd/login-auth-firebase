@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type InitialState = {
+  name: string;
   email: null;
   token: null;
   id: null;
@@ -8,6 +9,7 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
+  name: "",
   email: null,
   token: null,
   id: null,
@@ -23,6 +25,7 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.id = action.payload.id;
       state.isLogged = true;
+      state.name = action.payload.name;
 
       console.log(state.email);
       console.log(state.token);
@@ -33,6 +36,7 @@ const authSlice = createSlice({
       state.token = null;
       state.id = null;
       state.isLogged = false;
+      state.name = "";
     },
   },
 });

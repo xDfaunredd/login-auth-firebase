@@ -5,12 +5,16 @@ import { setUser } from "../../redux/auth/slice";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
+import { getFirestore, doc, setDoc } from "firebase/firestore";
+
 type InitialValues = {
+  name: string;
   email: string;
   password: string;
 };
 
 const initialValues: InitialValues = {
+  name: "",
   email: "",
   password: "",
 };
@@ -33,8 +37,17 @@ const SingUp = () => {
       );
       console.log(user);
 
+      const db = getFirestore();
+
+      await setDoc(doc(db, "users", user.uid), {
+        name: values.name,
+        email: user.email,
+        createdAt: new Date(),
+      });
+
       dispatch(
         setUser({
+          name: values.name,
           email: user.email,
           id: user.uid,
           token: user.refreshToken,
@@ -60,7 +73,7 @@ const SingUp = () => {
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <Formik onSubmit={handleSubmit} initialValues={initialValues}>
             <Form className="card-body">
-              {/* <div className="form-control">
+              <div className="form-control">
                 <label className="label">
                   <span className="label-text">Name</span>
                 </label>
@@ -71,7 +84,7 @@ const SingUp = () => {
                   className="input input-bordered"
                   required
                 />
-              </div> */}
+              </div>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>

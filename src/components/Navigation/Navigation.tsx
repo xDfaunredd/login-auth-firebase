@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../redux/store";
 import { removeUser } from "../../redux/auth/slice";
 import toast from "react-hot-toast";
+import { deleteAllTasks } from "../../redux/tasks/slice";
 
 type IsActive = {
   isActive: boolean;
@@ -46,7 +47,7 @@ const Navigation = () => {
           className="border rounded w-20 h-10 text-slate-300 bg-slate-500"
           onClick={() => {
             dispatch(removeUser());
-
+            dispatch(deleteAllTasks());
             toast.success("Successfully Logged Out!");
           }}
         >

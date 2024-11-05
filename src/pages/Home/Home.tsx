@@ -1,15 +1,21 @@
 import { useSelector } from "react-redux";
 
-import { selectEmail } from "../../redux/auth/selectors";
+import { selectEmail, selectName } from "../../redux/auth/selectors";
+import FromAdd from "../../components/FromAdd/FromAdd";
+import TaskList from "../../components/TaskList/TaskList";
 
 const Home = () => {
   const userEmail = useSelector(selectEmail);
+  const username = useSelector(selectName);
 
   return (
     <>
       <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-transform text-4xl">
-        Hello user, <span className="text-fuchsia-700 ">{userEmail}</span>
+        Hello {username}, <span className="text-fuchsia-700 ">{userEmail}</span>
       </h1>
+
+      <FromAdd />
+      <TaskList />
     </>
   );
 };
